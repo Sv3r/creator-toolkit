@@ -1,7 +1,7 @@
 package be.sv3r;
 
 import be.sv3r.command.CreatorAdminCommand;
-import be.sv3r.util.TeleportStick;
+import be.sv3r.event.PlayerListener;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
@@ -22,7 +22,7 @@ public class CreatorToolkit extends JavaPlugin {
     public void onEnable() {
         registerCommands();
 
-        getServer().getPluginManager().registerEvents(new TeleportStick(), this);
+        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
     }
 
     private void registerCommands() {

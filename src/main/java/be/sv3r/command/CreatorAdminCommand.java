@@ -4,6 +4,7 @@ import be.sv3r.CreatorToolkit;
 import be.sv3r.command.annotation.SubCommand;
 import be.sv3r.task.CountdownTask;
 import be.sv3r.util.EntityUtil;
+import be.sv3r.util.Keys;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
@@ -23,7 +24,13 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.time.Duration;
 import java.util.List;
@@ -137,6 +144,32 @@ public class CreatorAdminCommand extends AnnotatedCommand {
             Sound sound = Sound.sound(Key.key("entity.experience_orb.pickup"), Sound.Source.MASTER, 1F, 1F);
             player.playSound(sound, Sound.Emitter.self());
         });
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="teleportstick subcommand">
+    @SubCommand
+    public ArgumentBuilder<CommandSourceStack, ?> onTeleportStick() {
+        return Commands.literal("teleportstick")
+                .requires(source -> source.getSender() instanceof Player)
+                .executes(context -> {
+                    Player player = (Player) context.getSource().getSender();
+                    ItemStack teleportStick = new ItemStack(Material.STICK);
+                    ItemMeta meta = teleportStick.getItemMeta();
+
+                    meta.displayName(Component.text("Teleport Stick").style(Style.style(NamedTextColor.GOLD, TextDecoration.BOLD)));
+                    meta.lore(List.of(Component.text("Right click to select entity you are looking at!").color(NamedTextColor.GRAY)));
+
+                    meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                    meta.addEnchant(Enchantment.LOOTING, 1, true);
+                    meta.getPersistentDataContainer().set(Keys.TELEPORT_STICK, PersistentDataType.BOOLEAN, true);
+
+                    teleportStick.setItemMeta(meta);
+
+                    player.getInventory().addItem(teleportStick);
+
+                    return 0;
+                });
     }
     //</editor-fold>
 }
