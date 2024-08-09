@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="creator-toolkit:jar">
+    <output-path>$USER_HOME$/Documents/Localhost Server 1.21/plugins</output-path>
+    <root id="archive" name="creator-toolkit.jar">
+      <element id="module-output" name="creator-toolkit.main" />
+    </root>
+  </artifact>
+</component>
