@@ -1,22 +1,22 @@
-package be.sv3r.util.task;
+package be.sv3r.task;
 
-import be.sv3r.CreatorToolkit;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.function.Consumer;
 
-public class CountdownRunnable implements Runnable {
-    private final CreatorToolkit plugin;
+public class CountdownTask implements Runnable {
+    private final JavaPlugin plugin;
     private Integer assignedTaskId;
 
     private final int seconds;
     private int secondsLeft;
 
-    private final Consumer<CountdownRunnable> everySecond;
+    private final Consumer<CountdownTask> everySecond;
     private final Runnable beforeTimer;
     private final Runnable afterTimer;
 
-    public CountdownRunnable(CreatorToolkit plugin, int seconds, Runnable beforeTimer, Runnable afterTimer, Consumer<CountdownRunnable> everySecond) {
+    public CountdownTask(JavaPlugin plugin, int seconds, Runnable beforeTimer, Runnable afterTimer, Consumer<CountdownTask> everySecond) {
         this.plugin = plugin;
 
         this.seconds = seconds;
@@ -44,7 +44,7 @@ public class CountdownRunnable implements Runnable {
         return secondsLeft;
     }
 
-    public void scheduleTimer() {
-        this.assignedTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this, 0L, 20L);
+    public void scheduleTask() {
+        this.assignedTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.plugin, this, 0L, 20L);
     }
 }

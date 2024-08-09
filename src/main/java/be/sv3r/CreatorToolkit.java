@@ -6,19 +6,15 @@ import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitScheduler;
-import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@SuppressWarnings("UnstableApiUsage")
+@SuppressWarnings({"unused"})
 public class CreatorToolkit extends JavaPlugin {
-    public static final String ADMIN_PERMISSION = "creator.admin";
+    public static final Logger LOGGER = LoggerFactory.getLogger("creator");
 
     public static CreatorToolkit getPlugin() {
         return getPlugin(CreatorToolkit.class);
-    }
-
-    public static BukkitScheduler getScheduler() {
-        return getPlugin().getServer().getScheduler();
     }
 
     @Override
@@ -27,10 +23,10 @@ public class CreatorToolkit extends JavaPlugin {
     }
 
     private void registerCommands() {
-        @NotNull LifecycleEventManager<Plugin> manager = getLifecycleManager();
-        manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
+        final LifecycleEventManager<Plugin> lifecycleManager = this.getLifecycleManager();
+        lifecycleManager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             final Commands commands = event.registrar();
-            commands.register("creator", "", new CreatorCommand());
+            new CreatorCommand().register(this, commands);
         });
     }
 }
