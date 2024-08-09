@@ -1,6 +1,6 @@
 package be.sv3r;
 
-import be.sv3r.command.CreatorCommand;
+import be.sv3r.command.CreatorAdminCommand;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
@@ -26,7 +26,7 @@ public class CreatorToolkit extends JavaPlugin {
         final LifecycleEventManager<Plugin> lifecycleManager = this.getLifecycleManager();
         lifecycleManager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             final Commands commands = event.registrar();
-            new CreatorCommand().register(this, commands);
+            new CreatorAdminCommand().register(this, commands);
         });
     }
 }

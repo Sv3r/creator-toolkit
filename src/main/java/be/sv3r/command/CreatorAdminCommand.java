@@ -28,8 +28,8 @@ import org.bukkit.entity.Player;
 import java.time.Duration;
 import java.util.List;
 
-public class CreatorCommand extends AnnotatedCommand {
-    public CreatorCommand() {
+public class CreatorAdminCommand extends AnnotatedCommand {
+    public CreatorAdminCommand() {
         super("creatoradmin", "Creator admin command.", List.of("ca"));
     }
 
