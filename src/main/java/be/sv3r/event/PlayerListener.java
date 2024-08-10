@@ -52,6 +52,7 @@ public class PlayerListener implements Listener {
                                 .appendSpace().append(Component.text("selected.").color(NamedTextColor.GRAY))
                 );
                 player.sendMessage(entitySelectedMessage);
+                event.setCancelled(true);
             }
         }
     }
@@ -72,8 +73,18 @@ public class PlayerListener implements Listener {
                 Entity selectedEntity = selectedEntities.get(player.getUniqueId());
                 RayTraceResult rayTraceResult = player.rayTraceBlocks(100.0D);
 
-                if (selectedEntity == null) return;
+                if (selectedEntity == null) {
+                    Component noRayTraceMessage = teleportStickMessage(
+                            Component.text("You have not selected an entity to teleport!").style(Style.style(NamedTextColor.RED, TextDecoration.BOLD))
+                    );
+                    player.sendMessage(noRayTraceMessage);
+                    return;
+                }
                 if (rayTraceResult == null) {
+                    Component noRayTraceMessage = teleportStickMessage(
+                            Component.text("Entity was not teleported as no block was found!").style(Style.style(NamedTextColor.RED, TextDecoration.BOLD))
+                    );
+                    player.sendMessage(noRayTraceMessage);
                     return;
                 }
 
